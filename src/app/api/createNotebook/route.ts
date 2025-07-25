@@ -7,6 +7,8 @@ import { generateImage, generateImagePrompt } from "@/lib/openai";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export const runtime = 'edge'
+
 export async function POST(req: Request) {
     // const authData = auth();
     // console.log(authData);
