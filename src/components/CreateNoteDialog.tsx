@@ -1,5 +1,5 @@
 'use client';
-import { DialogDescription } from '@radix-ui/react-dialog';
+import { DialogClose, DialogDescription } from '@radix-ui/react-dialog';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { create } from 'domain';
@@ -62,7 +62,7 @@ const CreateNoteDialog = (props: Props) => {
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>
-                    Create New Note Book
+                    Create New Notebook
                 </DialogTitle>
                 <DialogDescription>
                     Give your notebook a name.
@@ -72,7 +72,9 @@ const CreateNoteDialog = (props: Props) => {
                 <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder='Name...' />
                 <div className="h-4"></div>
                 <div className="flex items-center gap-2">
-                    <Button type="reset" variant={'secondary'}>Cancel</Button>
+                    <DialogClose asChild>
+                        <Button type="button" variant={'secondary'} onClick={() => setInput("")}>Cancel</Button>
+                    </DialogClose>
                     <Button type="submit" className="bg-green-600" disabled={createNotebook.isPending}>
                         {createNotebook.isPending && (
                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
