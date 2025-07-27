@@ -4,6 +4,7 @@ import { useDebounce } from '@/lib/useDebounce'
 import { useCompletion } from '@ai-sdk/react'
 import { useMutation } from '@tanstack/react-query'
 import { Extension } from '@tiptap/core'
+import Highlight from '@tiptap/extension-highlight'
 import { EditorContent, useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
 import axios from 'axios'
@@ -42,7 +43,7 @@ const TipTapEditor = ({note}: Props) => {
     const editor = useEditor({
         autofocus: true,
         immediatelyRender: false,
-        extensions: [StarterKit, customShortcuts],
+        extensions: [StarterKit, customShortcuts, Highlight.configure({ multicolor: true })],
         content: editorState,
         onUpdate: ({editor}) => {
             setEditorState(editor.getHTML())
@@ -80,8 +81,11 @@ const TipTapEditor = ({note}: Props) => {
                 </Button>
             </div>
 
-            <div className="prose prose-sm w-full mt-4">
-                <EditorContent editor={editor}/>
+            <div className="w-full mt-4 min-h-[500px]">
+                <EditorContent 
+                    editor={editor}
+                    className="prose prose-sm max-w-none w-full focus:outline-none"
+                 />
             </div>
             <div className="h-4"></div>
             <span className="text-sm">

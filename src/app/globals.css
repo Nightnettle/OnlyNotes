@@ -128,7 +128,65 @@
 
 .tiptap.ProseMirror {
   outline: none;
+  padding: 1rem;
+  line-height: 1.75;
+  font-size: 16px;
 }
+
+.tiptap.ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.tiptap.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.tiptap.ProseMirror h3 {
+  font-size: 1,25rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.tiptap.ProseMirror p {
+  margin-bottom: 1rem;
+}
+
+.tiptap.ProseMirror ul, .tiptap.ProseMirror ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.tiptap.ProseMirror li {
+  margin-bottom: 0.25rem;
+}
+
+.tiptap.ProseMirror blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.tiptap {
+  mark {
+    background-color: #faf594;
+    border-radius: 0.4rem;
+    box-decoration-break: clone;
+    padding: 0.1rem 0.3rem;
+  }
+}
+
 
 .is-active {
   background-color: #dadada;
