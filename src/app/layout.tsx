@@ -1,4 +1,5 @@
 import Provider from "@/components/Provider";
+import ConditionalThemeProvider from "@/components/ConditionalThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -30,7 +31,9 @@ export default function RootLayout({
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
-            {children}
+            <ConditionalThemeProvider>
+              {children}
+            </ConditionalThemeProvider>
           </body>
         </Provider>
       </html>

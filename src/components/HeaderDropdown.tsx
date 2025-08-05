@@ -98,15 +98,15 @@ export const HeaderDropdown: React.FC<HeaderDropdownProps> = ({editor}) => {
             <DropdownMenuItem
                 key={label}
                 onClick={() => handleStyleChange(level)}
-                className={cn("flex flex-row items-center justify-between gap-4 cursor-pointer", {
-                    "bg-accent": level
+                className={cn("flex flex-row items-center justify-between gap-4 cursor-pointer dark:text-gray-200 transition-colors duration-300", {
+                    "bg-accent dark:bg-[#00b0874e]": level
                         ? editor.isActive("heading", {level})
                         : editor.isActive("paragraph"),
                 })}
                 aria-label={label}
             >
                 <Element className={className}>{label}</Element>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-muted-foreground dark:text-gray-400">
                     {shortcuts.join(" + ")}
                 </span>
             </DropdownMenuItem>
@@ -121,8 +121,8 @@ export const HeaderDropdown: React.FC<HeaderDropdownProps> = ({editor}) => {
                     variant="outline"
                     size="sm"
                     className={cn(
-                        "gap-2 px-3 py-2 h-9",
-                        editor.isActive("heading") && "bg-accent"
+                        "gap-2 px-3 py-2 h-9 dark:border-gray-600 dark:text-gray-200 transition-colors duration-300",
+                        editor.isActive("heading") && "bg-accent dark:bg-[#00b0874e]"
                     )}
                     aria-label="Text styles"
                 >
@@ -134,7 +134,7 @@ export const HeaderDropdown: React.FC<HeaderDropdownProps> = ({editor}) => {
                     )} />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48">
+            <DropdownMenuContent align="start" className="w-60">
                 {formatActions.map(renderMenuItem)}
             </DropdownMenuContent>
         </DropdownMenu>

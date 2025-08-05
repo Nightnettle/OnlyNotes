@@ -5,9 +5,9 @@ import Typewriter from 'typewriter-effect';
 type Props = {}
 
 const phrases = [
-  "⚡ Improve Productivity.",
-  "✒️ Write quality notes with AI.",
-  "\uD83D\uDCA1Gain inspiration for notes."
+  "⚡ Work smarter not harder.",
+  "✒️ AI assistant for note-taking.",
+  "✨ Stay inspired."
 ];
 
 const TypewriterTitle = (props: Props) => {

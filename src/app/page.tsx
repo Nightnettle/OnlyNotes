@@ -27,7 +27,7 @@ export default function Home() {
           className="max-w-2xl p-12 bg-white/30 backdrop-blur-lg rounded-2xl shadow-2xl"
           >
             <motion.h1 variants={fadeIn} className="font-semibold text-7xl text-center">
-              Personal AI <span className="text-[#00b087] font-bold">Brainstorm</span> {' '}Buddy.
+              Smart Notes, <span className="text-[#00b087] font-bold">Smarter</span> Ideas.
             </motion.h1>
           <div className="mt-4"></div>
           <motion.h2 variants={fadeIn} className="font-semibold text-3xl text-center text-slate-700">

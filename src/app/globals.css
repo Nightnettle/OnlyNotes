@@ -2,7 +2,60 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+/* Custom animations */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes slide-in {
+  from { transform: translateX(0); }
+  to { transform: translateX(0.25rem); }
+}
+
+.active-notebook {
+  animation: subtle-pulse 3s ease-in-out infinite;
+  position: relative;
+}
+
+.active-notebook::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background-color: #00b087;
+  opacity: 0.7;
+}
+
 @custom-variant dark (&:is(.dark *));
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+}
+
+/* Dark mode body background with higher specificity */
+html.dark body {
+  background-color: #111827 !important;
+  color: #f9fafb !important;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure proper dark mode for grainy background */
+.dark .grainy {
+  background-color: #111827;
+}
+
+/* Dark mode for active notebook animation */
+.dark .active-notebook::after {
+  background-color: #00b087;
+  opacity: 0.8;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -158,16 +211,16 @@
 }
 
 .tiptap.ProseMirror p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .tiptap.ProseMirror ul, .tiptap.ProseMirror ol {
-  margin-bottom: 1rem;
+  margin-bottom: 0.05rem;
   padding-left: 1.5rem;
 }
 
 .tiptap.ProseMirror li {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.05rem;
 }
 
 .tiptap.ProseMirror blockquote {
@@ -187,8 +240,58 @@
   }
 }
 
+/* Dark mode bullet points - make them brighter */
+.dark .tiptap.ProseMirror ul li::marker {
+  color: #d1d5db !important; /* Light gray for better visibility */
+}
+
+.dark .tiptap.ProseMirror ol li::marker {
+  color: #d1d5db !important; /* Light gray for numbered lists too */
+}
 
 .is-active {
   background-color: #dadada;
   border-radius: 2px;
+}
+
+/* Import highlight.js themes */
+@import 'highlight.js/styles/github.css';
+
+@media (prefers-color-scheme: dark) {
+  @import 'highlight.js/styles/github-dark.css';
+}
+
+/* Custom styling for code blocks */
+.tiptap pre {
+  border-radius: 0.5rem;
+  font-family: 'JetBrains Mono', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 1rem 0;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.tiptap pre code {
+  background: none;
+  font-size: 0.8rem;
+  padding: 0;
+}
+
+/* Code block with language selector styling */
+.code-block-wrapper {
+  position: relative;
+}
+
+.code-block-wrapper:hover .language-selector {
+  opacity: 1;
+}
+
+.language-selector {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
