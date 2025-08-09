@@ -1,10 +1,15 @@
 import { db } from "@/lib/db"
 import { $notes } from "@/lib/db/schema"
-import { eq } from "drizzle-orm"
+import { auth } from "@clerk/nextjs/server"
+import { and, eq } from "drizzle-orm"
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
     try {
+        const { userId } = await auth()
+        if (!userId) {
+            return new NextResponse("unauthorised", { status: 401 })
+        }
         const body = await req.json()
         let {noteId, editorState} = body
         if (!editorState || !noteId) {
@@ -12,11 +17,17 @@ export async function POST(req: Request) {
         }
 
         noteId = parseInt(noteId)
+        if (Number.isNaN(noteId)) {
+            return new NextResponse("Invalid noteId", { status: 400 })
+        }
         const notes = await db.select().from($notes).where(
-            eq($notes.id, noteId)
+            and(
+                eq($notes.id, noteId),
+                eq($notes.userId, userId)
+            )
         )
         if (notes.length != 1) {
-            return new NextResponse("failed to update", {status: 500})
+            return new NextResponse("Not found", {status: 404})
         }
 
         const note = notes[0]
@@ -24,7 +35,10 @@ export async function POST(req: Request) {
             await db.update($notes).set({
                 editorState
             }).where(
-                eq($notes.id, noteId)
+                and(
+                    eq($notes.id, noteId),
+                    eq($notes.userId, userId)
+                )
             )
         }
         return NextResponse.json({

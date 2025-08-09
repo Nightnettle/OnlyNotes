@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/react'
+import { NodeViewWrapper, NodeViewContent, NodeViewProps } from '@tiptap/react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,17 +10,7 @@ import {
 import { Button } from './ui/button'
 import { ChevronDown } from 'lucide-react'
 
-interface CodeBlockProps {
-  node: {
-    attrs: {
-      language: string
-    }
-  }
-  updateAttributes: (attrs: { language: string }) => void
-  extension: any
-}
-
-const CodeBlockWithLanguageSelector: React.FC<CodeBlockProps> = ({ node, updateAttributes, extension }) => {
+const CodeBlockWithLanguageSelector: React.FC<NodeViewProps> = ({ node, updateAttributes, extension }) => {
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
     { value: 'typescript', label: 'TypeScript' },
@@ -80,7 +70,7 @@ const CodeBlockWithLanguageSelector: React.FC<CodeBlockProps> = ({ node, updateA
           </DropdownMenu>
         </div>
         <pre className="hljs">
-          <NodeViewContent as="code" />
+          <NodeViewContent />
         </pre>
       </div>
     </NodeViewWrapper>

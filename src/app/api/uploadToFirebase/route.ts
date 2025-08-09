@@ -1,16 +1,28 @@
 import { db } from "@/lib/db"
 import { $notes } from "@/lib/db/schema"
 import { uploadFileToFirebase } from "@/lib/firebase"
-import { eq } from 'drizzle-orm'
+import { auth } from "@clerk/nextjs/server"
+import { and, eq } from 'drizzle-orm'
 import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
     try {
+        const { userId } = await auth()
+        if (!userId) {
+            return new NextResponse("unauthorised", { status: 401 })
+        }
         const {noteId} = await req.json()
+        const id = parseInt(noteId)
+        if (Number.isNaN(id)) {
+            return new NextResponse("Invalid noteId", { status: 400 })
+        }
         // extract dalle image url
         // save to firebase
         const notes = await db.select().from($notes).where(
-            eq($notes.id, parseInt(noteId))
+            and(
+                eq($notes.id, id),
+                eq($notes.userId, userId)
+            )
         )
 
         if (!notes[0].imageUrl) {
@@ -23,7 +35,12 @@ export async function POST(req: Request) {
         await db.update($notes).set({
             imageUrl: firebase_url
         })
-        .where(eq($notes.id, parseInt(noteId)))
+        .where(
+            and(
+                eq($notes.id, id),
+                eq($notes.userId, userId)
+            )
+        )
         
         return new NextResponse('ok', {status: 200})
     } catch (error) {
